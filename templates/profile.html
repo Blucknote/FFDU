@@ -4,4 +4,11 @@
 <h1 class="title">
 	Welcome, {{user.name}}
 </h1>
+<div style="text-align:venter;">
+  Your uploads <br>
+  {% for upload in uploads %}
+    <img src="{{ upload.path }}"\> <br>
+    {{ upload.name }}
+  {% endfor %}
+</div>
 {% endblock %}

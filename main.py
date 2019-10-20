@@ -16,14 +16,25 @@ main = Blueprint('main', __name__)
 log = logging.getLogger('ffdu')
 
 
+@main.route('/<int:page>')
+def index(page=1):
+    images = db.session.query(File).paginate(page, 5, False)
+    return render_template('index.html', images=images)
+
 @main.route('/')
-def index():
-    return render_template('index.html')
+def bypass():
+  return index()
 
 @login_required
 @main.route('/profile')
 def profile():
-    return render_template('profile.html', user=current_user)
+    uploads = db.session.query(File).filter(File.user_id==current_user.id)
+    return render_template('profile.html', user=current_user, uploads=uploads)
+
+@main.route('/image/<int:image_id>')
+def image_by_id(image_id):
+    img = db.session.query(File).filter(File.id==image_id).first()
+    return render_template('image_card.html', image=img)
 
 @login_required
 @main.route('/upload', methods=['POST'])
@@ -65,7 +76,7 @@ def upload():
             log.info(f'File {file.filename} has been uploaded successfully')
             bdfile = File(
               name=fname,
-              path=save_path,
+              path=os.path.join('/media', fname),
               size=int(request.form['dztotalfilesize']),
               user_id=flask_login.current_user.id,
             )

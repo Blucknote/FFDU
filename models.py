@@ -21,4 +21,4 @@ class File(db.Model):
     size = db.Column(db.Integer)
     user_id = db.Column(db.Integer, ForeignKey('user.id'))
 
-    # user = relationship("User", back_populates="File")
+    user = relationship("User", back_populates="files")

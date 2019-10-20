@@ -9,9 +9,36 @@
 </h2>
 {% if current_user.is_authenticated %}
   <form method="POST" action='/upload' class="dropzone dz-clickable" 
-        id="dropper" enctype="multipart/form-data">
+        id="dropper" enctype="multipart/form-data" style="color:black;">
   </form>
 {% endif %}
+
+<div id="gallery" style="margin-top:50px;">
+  {% for image in images.items %}
+    <div class="img">
+      <a href="/image/{{ image.id }}">
+        <img src="{{ image.path }}" width=350 heigth=350\> <br>
+        {{ image.name }}
+      </a>
+    </div>
+  {% endfor %}
+  
+  {% if images.has_prev %}
+    <a href="{{ url_for('main.index', page = images.prev_num) }}">
+    << Newer posts
+    </a>
+  {% else %}
+    << Newer posts
+  {% endif %} 
+  | 
+  {% if images.has_next %}
+    <a href="{{ url_for('main.index', page = images.next_num) }}">
+    Older posts >>
+    </a>
+  {% else %}
+    Older posts >>
+  {% endif %}
+</div>
 
 <script type="application/javascript">
     Dropzone.options.dropper = {
