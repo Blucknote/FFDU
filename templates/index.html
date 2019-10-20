@@ -7,4 +7,21 @@
 <h2 class="subtitle">
   Easy authentication and authorization in Flask.
 </h2>
+{% if current_user.is_authenticated %}
+  <form method="POST" action='/upload' class="dropzone dz-clickable" 
+        id="dropper" enctype="multipart/form-data">
+  </form>
+{% endif %}
+
+<script type="application/javascript">
+    Dropzone.options.dropper = {
+        paramName: 'file',
+        chunking: true,
+        forceChunking: true,
+        url: '/upload',
+        maxFilesize: 1025, // megabytes
+        chunkSize: 1000000 // bytes
+    }
+</script>
+
 {% endblock %}
