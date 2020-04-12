@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align:center;">
+ <div>
+   <img src="{{ image.path }}"\>
+ </div>
+ <div style="margin-top:25px;">
+   filename: {{ image.name }} <br>
+   filesize: {{ image.size }} <br>
+   uploader: {{ image.user.name }} <br>
+ </div>
+</div>
+ 
+{% endblock %}
